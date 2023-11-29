@@ -8,11 +8,38 @@ Removed Inguma from the menu to bypass issue with installation (By Jayson Grace 
 
 ---------------------------------------------29 / 11 / 2023----------------------------------------------------
 
+part 1
+
 Changed raw_print to print in all statements to coincide with syntax and grammar for Python3
 
-Replaced deprecated apt-key with gdt for use in Ubuntu 18 and later
+Replaced deprecated apt-key with gpg for use in Ubuntu 18 and later
 
 Replaced apt-get with apt and related grammar for Ubuntu 18 and later
+
+part 2
+
+Security Enhancements
+
+    Subprocess Module Integration: Replaced all instances of os.system with subprocess.run to enhance security and control over system command execution. This change mitigates the risk of shell injection vulnerabilities and provides better handling of command outputs and errors.
+
+Code Quality Improvements
+
+    Indentation Correction: Standardized indentation throughout the script, replacing tabs with four spaces in accordance with PEP 8 guidelines, ensuring improved readability and consistency.
+
+Testing and Reliability
+
+    Added Unit Tests: Introduced a new testing script using Python's unittest framework. This script includes tests for:
+        Command Execution: Verifying the correct execution of commands via subprocess.
+        Error Handling: Testing the script's response to various error conditions to ensure robustness and stability.
+
+Best Practices
+
+    Code Refactoring: Reviewed the script for adherence to Python best practices, including proper error handling and input validation where relevant.
+
+Recommendations
+
+    Further Security Review: Due to the extensive use of system command execution, a detailed security audit is recommended, especially if user input is involved in forming command strings.
+
 
 Remaining issues:
 
@@ -22,7 +49,7 @@ Failure to install:
 
 The package repositories need to be updated with the latest key handling provided in gpt. Either I will have to host my own repo possibly through gitraw or contacting the manager to add support
 
-With the ladder, we will need to add specifications for [GDP] 
+With the ladder, we will need to add specifications for [GPG] 
 
 Right now, apt does not recognize the key on the server and so there is no handshake. Nothing can be downloaded.
 
