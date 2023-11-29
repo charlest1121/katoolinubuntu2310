@@ -5,3 +5,26 @@ The problem of uppercases characters in the installation script has been solved 
 ---------------------------------------------19 / 04 / 2016----------------------------------------------------
 
 Removed Inguma from the menu to bypass issue with installation (By Jayson Grace : https://github.com/l50)
+
+---------------------------------------------29 / 11 / 2023----------------------------------------------------
+
+Changed raw_print to print in all statements to coincide with syntax and grammar for Python3
+
+Replaced deprecated apt-key with gdt for use in Ubuntu 18 and later
+
+Replaced apt-get with apt and related grammar for Ubuntu 18 and later
+
+Remaining issues:
+
+Failure to install:
+
+---
+
+The package repositories need to be updated with the latest key handling provided in gpt. Either I will have to host my own repo possibly through gitraw or contacting the manager to add support
+
+With the ladder, we will need to add specifications for [GDP] 
+
+Right now, apt does not recognize the key on the server and so there is no handshake. Nothing can be downloaded.
+
+---
+The list of tools is also deprecated, not all of them are still available. The last time it was managed was 2016.
