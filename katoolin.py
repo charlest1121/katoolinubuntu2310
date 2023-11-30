@@ -5,11 +5,99 @@ import subprocess
 import sys, traceback
 
 
+    #all tools will be aggregated here
+    reporting_tools = [
+    'casefile', 'cutycapt', 'dos2unix', 'dradis', 
+    'keepnote', 'magictree', 'metagoofil', 'nipper-ng', 'pipal'
+]
+    information_gathering_tools = [
+    'acccheck', 'ace-voip', 'amap', 'automater', 'braa', 'casefile', 'cdpsnarf',
+    'cisco-torch', 'cookie-cadger', 'copy-router-config', 'dmitry', 'dnmap',
+    'dnsenum', 'dnsmap', 'dnsrecon', 'dnstracer', 'dnswalk', 'dotdotpwn',
+    'enum4linux', 'enumiax', 'exploitdb', 'fierce', 'firewalk', 'fragroute',
+    'fragrouter', 'ghost-phisher', 'golismero', 'goofile', 'lbd', 'maltego-teeth',
+    'masscan', 'metagoofil', 'miranda', 'nmap', 'p0f', 'parsero', 'recon-ng',
+    'set', 'smtp-user-enum', 'snmpcheck', 'sslcaudit', 'sslsplit', 'sslstrip',
+    'sslyze', 'thc-ipv6', 'theharvester', 'tlssled', 'twofi', 'urlcrazy',
+    'wireshark', 'wol-e', 'xplico', 'ismtp', 'intrace', 'hping3'
+]
+    vulnerability_analysis_tools = [
+    'bbqsql', 'bed', 'cisco-auditing-tool', 'cisco-global-exploiter', 
+    'cisco-ocs', 'cisco-torch', 'copy-router-config', 'doona', 
+    'dotdotpwn', 'greenbone-security-assistant', 'hexorbase', 'jsql', 
+    'lynis', 'nmap', 'ohrwurm', 'openvas-cli', 'openvas-manager', 
+    'openvas-scanner', 'oscanner', 'powerfuzzer', 'sfuzz', 'sidguesser', 
+    'siparmyknife', 'sqlmap', 'sqlninja', 'sqlsus', 'thc-ipv6', 
+    'tnscmd10g', 'unix-privesc-check', 'yersinia'
+]
+    wireless_attacks_tools = [
+    'aircrack-ng', 'asleap', 'bluelog', 'blueranger', 'bluesnarfer', 'bully', 
+    'cowpatty', 'crackle', 'eapmd5pass', 'fern-wifi-cracker', 'ghost-phisher', 
+    'giskismet', 'kalibrate-rtl', 'killerbee', 'kismet', 'mdk3', 'mfcuk', 
+    'mfoc', 'mfterm', 'multimon-ng', 'pixiewps', 'reaver', 'redfang', 
+    'spooftooph', 'wifi-honey', 'wifitap', 'wifite'
+]
+    web_application_security_tools = [
+    'apache-users', 'arachni', 'bbqsql', 'blindelephant', 'burpsuite', 
+    'cutycapt', 'davtest', 'deblaze', 'dirb', 'dirbuster', 'fimap', 
+    'funkload', 'grabber', 'jboss-autopwn', 'joomscan', 'jsql', 
+    'maltego-teeth', 'padbuster', 'paros', 'parsero', 'plecost', 
+    'powerfuzzer', 'proxystrike', 'recon-ng', 'skipfish', 'sqlmap', 
+    'sqlninja', 'sqlsus', 'ua-tester', 'uniscan', 'vega', 'w3af', 
+    'webscarab', 'websploit', 'wfuzz', 'wpscan', 'xsser', 'zaproxy'
+]
+    network_security_tools = [
+    'burpsuite', 'dnschef', 'fiked', 'hamster-sidejack', 'hexinject', 'iaxflood', 
+    'inviteflood', 'ismtp', 'mitmproxy', 'ohrwurm', 'protos-sip', 'rebind', 
+    'responder', 'rtpbreak', 'rtpinsertsound', 'rtpmixsound', 'sctpscan', 
+    'siparmyknife', 'sipp', 'sipvicious', 'sniffjoke', 'sslsplit', 'sslstrip', 
+    'thc-ipv6', 'voiphopper', 'webscarab', 'wifi-honey', 'wireshark', 'xspy', 
+    'yersinia', 'zaproxy'
+]
+    network_utilities_tools = [
+    'cryptcat', 'cymothoa', 'dbd', 'dns2tcp', 'http-tunnel', 'httptunnel', 
+    'intersect', 'nishang', 'polenum', 'powersploit', 'pwnat', 'ridenum', 
+    'sbd', 'u3-pwn', 'webshells', 'weevely'
+]
+    exploitation_tools = [
+    'armitage', 'backdoor-factory', 'beef-xss', 'cisco-auditing-tool', 
+    'cisco-global-exploiter', 'cisco-ocs', 'cisco-torch', 'crackle', 
+    'jboss-autopwn', 'linux-exploit-suggester', 'maltego-teeth', 'set', 
+    'shellnoob', 'sqlmap', 'thc-ipv6', 'yersinia'
+]
+    forensics_tools = [
+    'binwalk', 'bulk-extractor', 'chntpw', 'cuckoo', 'dc3dd', 'ddrescue', 
+    'dumpzilla', 'extundelete', 'foremost', 'galleta', 'guymager', 
+    'iphone-backup-analyzer', 'p0f', 'pdf-parser', 'pdfid', 'pdgmail', 
+    'peepdf', 'volatility', 'xplico'
+]
+stress_testing_tools = [
+    'dhcpig', 'funkload', 'iaxflood', 'inviteflood', 'ipv6-toolkit', 'mdk3', 
+    'reaver', 'rtpflood', 'slowhttptest', 't50', 'termineter', 'thc-ipv6', 
+    'thc-ssl-dos'
+]
+password_attack_tools = [
+    'acccheck', 'burpsuite', 'cewl', 'chntpw', 'cisco-auditing-tool', 
+    'cmospwd', 'creddump', 'crunch', 'findmyhash', 'gpp-decrypt', 
+    'hash-identifier', 'hexorbase', 'john', 'johnny', 'keimpx', 
+    'maltego-teeth', 'maskprocessor', 'multiforcer', 'ncrack', 
+    'oclgausscrack', 'pack', 'patator', 'polenum', 'rainbowcrack', 
+    'rcracki-mt', 'rsmangler', 'statsprocessor', 'thc-pptp-bruter', 
+    'truecrack', 'webscarab', 'wordlists', 'zaproxy'
+]
+reverse_engineering_tools = [
+    'apktool', 'dex2jar', 'python-distorm3', 'edb-debugger', 'jad', 
+    'javasnoop', 'jd', 'ollydbg', 'smali', 'valgrind', 'yara'
+]
+
 if os.getuid() != 0:
     print("Sorry. This script requires sudo privledges")
     sys.exit()
 def main():
-    try:
+    
+
+    
+try:
         print ('''
 
  $$\   $$\             $$\                         $$\ $$\           
@@ -177,136 +265,39 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 0) Install all Information Gathering tools
                  
                         ''')
-                            print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
-                            opcion2 = input("\033[1;36mkat > \033[1;m")
-                            if opcion2 == "1":
-                                cmd = subprocess.run("apt install acccheck")
 
-                            elif opcion2 == "2":
-                                cmd = subprocess.run("apt install ace-voip")
+information_gathering_tools = [  # Define the list of strings here
 
-                            elif opcion2 == "3":
-                                cmd = subprocess.run("apt install amap")
-                            elif opcion2 == "4":
-                                cmd = subprocess.run("apt install automater")
-                            elif opcion2 == "5":
-                                cmd = subprocess.run("wget http://www.morningstarsecurity.com/downloads/bing-ip2hosts-0.4.tar.gz && tar -xzvf bing-ip2hosts-0.4.tar.gz && cp bing-ip2hosts-0.4/bing-ip2hosts /usr/local/bin/")
-                            elif opcion2 == "6":
-                                cmd = subprocess.run("apt install braa")
-                            elif opcion2 == "7":
-                                cmd = subprocess.run("apt install casefile")
-                            elif opcion2 == "8":
-                                cmd = subprocess.run("apt install cdpsnarf")
-                            elif opcion2 == "9":
-                                cmd = subprocess.run("apt install cisco-torch")
-                            elif opcion2 == "10":
-                                cmd = subprocess.run("apt install cookie-cadger")
-                            elif opcion2 == "11":
-                                cmd = subprocess.run("apt install copy-router-config")
-                            elif opcion2 == "12":
-                                cmd = subprocess.run("apt install dmitry")
-                            elif opcion2 == "13":
-                                cmd = subprocess.run("apt install dnmap")
-                            elif opcion2 == "14":
-                                cmd = subprocess.run("apt install dnsenum")
-                            elif opcion2 == "15":
-                                cmd = subprocess.run("apt install dnsmap")
-                            elif opcion2 == "16":
-                                cmd = subprocess.run("apt install dnsrecon")
-                            elif opcion2 == "17":
-                                cmd = subprocess.run("apt install dnstracer")
-                            elif opcion2 == "18":
-                                cmd = subprocess.run("apt install dnswalk")
-                            elif opcion2 == "19":
-                                cmd = subprocess.run("apt install dotdotpwn")
-                            elif opcion2 == "20":
-                                cmd = subprocess.run("apt install enum4linux")
-                            elif opcion2 == "21":
-                                cmd = subprocess.run("apt install enumiax")
-                            elif opcion2 == "22":
-                                cmd = subprocess.run("apt install exploitdb")
-                            elif opcion2 == "23":
-                                cmd = subprocess.run("apt install fierce")
-                            elif opcion2 == "24":
-                                cmd = subprocess.run("apt install firewalk")
-                            elif opcion2 == "25":
-                                cmd = subprocess.run("apt install fragroute")
-                            elif opcion2 == "26":
-                                cmd = subprocess.run("apt install fragrouter")
-                            elif opcion2 == "27":
-                                cmd = subprocess.run("apt install ghost-phisher")
-                            elif opcion2 == "28":
-                                cmd = subprocess.run("apt install golismero")
-                            elif opcion2 == "29":
-                                cmd = subprocess.run("apt install goofile")
-                            elif opcion2 == "30":
-                                cmd = subprocess.run("apt install lbd")
-                            elif opcion2 == "31":
-                                cmd = subprocess.run("apt install maltego-teeth")
-                            elif opcion2 == "32":
-                                cmd = subprocess.run("apt install masscan")
-                            elif opcion2 == "33":
-                                cmd = subprocess.run("apt install metagoofil")
-                            elif opcion2 == "34":
-                                cmd = subprocess.run("apt install miranda")
-                            elif opcion2 == "35":
-                                cmd = subprocess.run("apt install nmap")
-                            elif opcion2 == "36":
-                                print ('ntop is unavailable')
-                            elif opcion2 == "37":
-                                cmd = subprocess.run("apt install p0f")
-                            elif opcion2 == "38":
-                                cmd = subprocess.run("apt install parsero")
-                            elif opcion2 == "39":
-                                cmd = subprocess.run("apt install recon-ng")
-                            elif opcion2 == "40":
-                                cmd = subprocess.run("apt install set")
-                            elif opcion2 == "41":
-                                cmd = subprocess.run("apt install smtp-user-enum")
-                            elif opcion2 == "42":
-                                cmd = subprocess.run("apt install snmpcheck")
-                            elif opcion2 == "43":
-                                cmd = subprocess.run("apt install sslcaudit")
-                            elif opcion2 == "44":
-                                cmd = subprocess.run("apt install sslsplit")
-                            elif opcion2 == "45":
-                                cmd = subprocess.run("apt install sslstrip")
-                            elif opcion2 == "46":
-                                cmd = subprocess.run("apt install sslyze")
-                            elif opcion2 == "47":
-                                cmd = subprocess.run("apt install thc-ipv6")
-                            elif opcion2 == "48":
-                                cmd = subprocess.run("apt install theharvester")
-                            elif opcion2 == "49":
-                                cmd = subprocess.run("apt install tlssled")
-                            elif opcion2 == "50":
-                                cmd = subprocess.run("apt install twofi")
-                            elif opcion2 == "51":
-                                cmd = subprocess.run("apt install urlcrazy")
-                            elif opcion2 == "52":
-                                cmd = subprocess.run("apt install wireshark")
-                            elif opcion2 == "53":
-                                cmd = subprocess.run("apt install wol-e")
-                            elif opcion2 == "54":
-                                cmd = subprocess.run("apt install xplico")
-                            elif opcion2 == "55":
-                                cmd = subprocess.run("apt install ismtp")
-                            elif opcion2 == "56":
-                                cmd = subprocess.run("apt install intrace")
-                            elif opcion2 == "57":
-                                cmd = subprocess.run("apt install hping3")
-                            elif opcion2 == "back":
-                                inicio()
-                            elif opcion2 == "gohome":
-                                inicio1()        
-                            elif opcion2 == "0":
-                                cmd = subprocess.run("apt install -y acccheck ace-voip amap automater braa casefile cdpsnarf cisco-torch cookie-cadger copy-router-config dmitry dnmap dnsenum dnsmap dnsrecon dnstracer dnswalk dotdotpwn enum4linux enumiax exploitdb fierce firewalk fragroute fragrouter ghost-phisher golismero goofile lbd maltego-teeth masscan metagoofil miranda nmap p0f parsero recon-ng set smtp-user-enum snmpcheck sslcaudit sslsplit sslstrip sslyze thc-ipv6 theharvester tlssled twofi urlcrazy wireshark wol-e xplico ismtp intrace hping3 && wget http://www.morningstarsecurity.com/downloads/bing-ip2hosts-0.4.tar.gz && tar -xzvf bing-ip2hosts-0.4.tar.gz && cp bing-ip2hosts-0.4/bing-ip2hosts /usr/local/bin/")                
-                            else:
-                                print ("\033[1;31mSorry, that was an invalid command!\033[1;m")
+def install_information_gathering_tools():
+    global information_gathering_tools  # Access the global variable
+    for idx, tool in enumerate(information_gathering_tools, 1):
+        print(f"{idx}) {tool}")
+        print("0) Install all Information Gathering tools")
+        print("\033[1;32mInsert the number of the tool to install it.\n\033[1;m")
+    choice = input("Enter the number(s) of the tool(s) to install (separated by space for multiple): ")
+    selected_tools = []
+    if choice == "0":
+        selected_tools = information_gathering_tools
+    else:
+        try:
+            choices = map(int, choice.split())
+            for ch in choices:
+                if 1 <= ch <= len(information_gathering_tools):
+                    selected_tools.append(information_gathering_tools[ch - 1])
+        except ValueError:
+            print("Invalid input. Please enter number(s).")
+    if selected_tools:
+        install_command = ["apt", "install"] + selected_tools
+        subprocess.run(install_command)
+    else:
+        print("No valid tools selected for installation.")
+
+install_information_gathering_tools()
+while opcion1 == "2":
+    # Code inside the while loop
 
 
-
-                        while opcion1 == "2":
+while opcion1 == "2":
                             print ('''
 \033[1;36m=+[ Vulnerability Analysis\033[1;m
 
@@ -329,8 +320,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 17) Lynis                34) unix-privesc-check
                     35) Yersinia
 
-0) Install all Vulnerability Analysis tools
-                 
+0) Install all Vulnerability Analysis tools         
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -435,8 +425,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 14) GISKismet                30) Wifi Honey                31) Wifitap
 16) gr-scan                32) Wifite 
 
-0) Install all Wireless Attacks tools
-                 
+0) Install all Wireless Attacks tools          
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -538,8 +527,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 20) Paros                40) XSSer
                     41) zaproxy
 
-0) Install all Web Applications tools
-                 
+0) Install all Web Applications tools  
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
 
@@ -658,8 +646,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 15) rtpbreak                31) Yersinia
 16) rtpinsertsound            32) zaproxy 
 
-0) Install all Sniffing & Spoofing tools
-                 
+0) Install all Sniffing & Spoofing tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -761,8 +748,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 15) Webshells
 16) Weevely
 
-0) Install all Maintaining Access tools
-                 
+0) Install all Maintaining Access tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -822,8 +808,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 8) Nipper-ng
 9) pipal
 
-0) Install all Reporting Tools
-                 
+0) Install all Reporting Tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -878,8 +863,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 16) THC-IPV6
 17) Yersinia
 
-0) Install all Exploitation Tools
-                 
+0) Install all Exploitation Tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -946,8 +930,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
                     22) Volatility
                     23) Xplico
 
-0) Install all Forensics Tools
-                 
+0) Install all Forensics Tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -1026,8 +1009,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 13) THC-IPV6
 14) THC-SSL-DOS         
 
-0) Install all Stress Testing tools
-                 
+0) Install all Stress Testing tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -1092,8 +1074,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 17) keimpx                35) wordlists 
 18) Maltego Teeth            36) zaproxy 
 
-0) Install all Password Attacks tools
-                 
+0) Install all Password Attacks tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -1195,8 +1176,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
 10) Valgrind
 11) YARA
 
-0) Install all Reverse Engineering tools
-                 
+0) Install all Reverse Engineering tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")
@@ -1243,8 +1223,7 @@ For more information , please visit : http://www.florian-diesch.de/software/clas
  5) Sakis3G    
  6) smali
 
-0) Install all Hardware Hacking tools
-                 
+0) Install all Hardware Hacking tools                 
                         ''')
                             print ("\033[1;32mInsert the number of the tool to install it .\n\033[1;m")
                             opcion2 = input("\033[1;36mkat > \033[1;m")

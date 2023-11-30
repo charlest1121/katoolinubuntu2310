@@ -6,7 +6,7 @@ The problem of uppercases characters in the installation script has been solved 
 
 Removed Inguma from the menu to bypass issue with installation (By Jayson Grace : https://github.com/l50)
 
----------------------------------------------29 / 11 / 2023----------------------------------------------------
+---------------------------------------------29 / 11 / 2023----------------------------------------------------Charles Thompson
 
 part 1
 
@@ -58,3 +58,8 @@ Right now, apt does not recognize the key on the server and so there is no hands
 
 ---
 The list of tools is also deprecated, not all of them are still available. The last time it was managed was 2016.
+
+---------------------------------------------30 / 11 / 2023----------------------------------------------------Charles Thompson
+
+aggregated all apt installations to categorized lists.
+will overhaul the installation script in the coming days.
